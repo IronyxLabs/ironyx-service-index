@@ -16,18 +16,12 @@ run-name: ${{ github.event_name == 'pull_request' && format('[PR] - {1} {0}',  g
 
 jobs:
   pre:
-    - name: Set NuGet Package Sources
-      runs: |
-        dotnet nuget add source ironyx \
-        --username ${{ github.actor }}
-        --password ${{ secrets.GITHUB_TOKEN }}
-        --store-password-in-clear-text
-        --source https://nuget.pkg.github.com/IronyxLabs/index.json
   ci:
     uses: IronyxLabs/ironyx-scripts/.github/workflows/dotnet_pr-pipeline.yaml@v1
     secrets:
       sonar-token: ${{ secrets.SONAR_TOKEN }}
       testspace-token: ${{ secrets.TESTSPACE_TOKEN }}
+      github-token: ${{ secrets.GITHUB_TOKEN }}
     with:
       sonar-project_key: IronyxLabs_ironyx-service-index
       net-solution: src/Ironyx.ServiceIndex.slnx
