@@ -1,1 +1,8 @@
-<Solution />
+<Solution>
+  <Project Path="Ironyx.ServiceIndex.Api/Ironyx.ServiceIndex.Api.csproj" Id="2993687b-4668-483f-aa6a-911a6afbf495" />
+  <Project Path="Ironyx.ServiceIndex.Application/Ironyx.ServiceIndex.Application.csproj" Id="af946049-1531-480b-b4f5-15e932ce0a0a" />
+  <Project Path="Ironyx.ServiceIndex.Domain/Ironyx.ServiceIndex.Domain.csproj" Id="f02b28d4-4e57-4ec6-a971-02bfa98160aa" />
+  <Project Path="Ironyx.ServiceIndex.Infrastructure/Ironyx.ServiceIndex.Infrastructure.csproj" Id="44183e61-8448-4b4a-b741-f186d9411e46" />
+  <Project Path="Ironyx.ServiceIndex.Test.Unit/Ironyx.ServiceIndex.Test.Unit.csproj" Id="5c1be2ef-c95a-434e-8304-5473dc1b59a8" />
+  <Project Path="Ironyx.ServiceIndex/Ironyx.ServiceIndex.csproj" Id="f846ac58-74e3-43a5-81c6-170b13dec598" />
+</Solution>
