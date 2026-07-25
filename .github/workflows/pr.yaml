@@ -1,9 +1,10 @@
 name: PR
 
 on:
-    push:
-        branches:
-            - develop
+  push:
+    branches:
+      - develop
+      - fix/pr-workflow
   pull_request:
     branches:
       - main
