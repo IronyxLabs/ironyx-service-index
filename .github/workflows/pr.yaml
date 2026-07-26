@@ -1,15 +1,18 @@
 name: PR
 
 on:
-    push:
-        branches:
-            - develop
+  push:
+    branches:
+      - develop
   pull_request:
     branches:
       - main
       - develop
       - release/*
-  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: read
 
 run-name: ${{ github.event_name == 'pull_request' && format('[PR] - {1} {0}',  github.event.pull_request.number, github.event.pull_request.title) || format('[MANUAL] - Run on {0} branch', github.event.pull_request.number, github.ref_name) }}
 
@@ -19,6 +22,7 @@ jobs:
     secrets:
       sonar-token: ${{ secrets.SONAR_TOKEN }}
       testspace-token: ${{ secrets.TESTSPACE_TOKEN }}
+      github-token: ${{ secrets.NUGET_READ }}
     with:
       sonar-project_key: IronyxLabs_ironyx-service-index
       net-solution: src/Ironyx.ServiceIndex.slnx
