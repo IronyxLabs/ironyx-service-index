@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - develop
-      - fix/pr-workflow
   pull_request:
     branches:
       - main
