@@ -7,12 +7,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-	  <PackageReference Include="Ironyx.Kernel" Version="1.0.0" />
+	  <PackageReference Include="Ironyx.Kernel" Version="1.0.1" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.10" />
+	  <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.3" />
 	  <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
 	  <PackageReference Include="Serilog.Settings.Configuration" Version="10.0.1" />
 	  <PackageReference Include="Serilog.Sinks.Async" Version="2.1.0" />
 	  <PackageReference Include="Serilog.Sinks.Console" Version="6.1.1" />
 	  <PackageReference Include="Serilog.Sinks.Grafana.Loki" Version="9.0.1" />    
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ironyx.ServiceIndex.Api\Ironyx.ServiceIndex.Api.csproj" />
+    <ProjectReference Include="..\Ironyx.ServiceIndex.Application\Ironyx.ServiceIndex.Application.csproj" />
+    <ProjectReference Include="..\Ironyx.ServiceIndex.Infrastructure\Ironyx.ServiceIndex.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

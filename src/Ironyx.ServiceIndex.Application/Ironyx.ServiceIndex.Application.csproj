@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Ironyx.Kernel.Execution" Version="1.0.0" />
+    <PackageReference Include="Ironyx.Kernel.Execution" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ironyx.ServiceIndex.Api\Ironyx.ServiceIndex.Api.csproj" />
+    <ProjectReference Include="..\Ironyx.ServiceIndex.Infrastructure\Ironyx.ServiceIndex.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
