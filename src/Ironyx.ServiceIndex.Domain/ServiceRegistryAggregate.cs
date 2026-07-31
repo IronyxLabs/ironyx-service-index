@@ -28,12 +28,17 @@ namespace Ironyx.ServiceIndex.Domain
             if (_registration.Any(r => r.Name == name && r.Uri != uri)) throw Exceptions.ConflictName(name);
             if (_registration.Any(r => r.Name != name && r.Uri == uri)) throw Exceptions.ConflictUrl(name);
 
-            _registration.Add(new Registration { Id = Guid.NewGuid(), Name = name, Uri = uri, CanonicalTypes = types });
+            if (!_registration.IsRegistered(name, uri)) _registration.Add(new Registration { Id = Guid.NewGuid(), Name = name, Uri = uri, CanonicalTypes = types });
         }
     }
 
     file static class ServiceRegistryAggregateExtensions
     {
+        public static bool IsRegistered(this IEnumerable<Registration> registrations, string name, string uri)
+        {
+            return registrations.Any(r => r.Name == name && r.Uri == uri);
+        }
+
         public static void Validate(this IEnumerable<CanonicalType> types)
         {
             foreach (var type in types)

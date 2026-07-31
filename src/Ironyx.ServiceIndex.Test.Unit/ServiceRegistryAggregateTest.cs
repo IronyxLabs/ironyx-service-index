@@ -120,5 +120,27 @@ namespace Ironyx.ServiceIndex.Test.Unit
             if (version is null) Assert.Throws<ArgumentNullException>(() => sut.Register(new Faker().Random.String2(10), new Faker().Internet.Url(), types));
             else Assert.Throws<ArgumentException>(() => sut.Register(new Faker().Random.String2(10), new Faker().Internet.Url(), types));
         }
+
+        [Fact(DisplayName = "[UNIT][SRA-007]: Skip registration")]
+        [ServiceRegistrationFeature]
+        public void ServiceRegistryAggregate_Register_SkipRegistration()
+        {
+            // Arrange
+            var sut = CreateSUT();
+            var name = new Faker().Random.String2(10);
+            var url = new Faker().Internet.Url();
+            var types = new CanonicalTypeFaker().GenerateBetween(1, 5);
+
+            sut.Register(name, url, types);
+
+            // Act
+            sut.Register(name, url, types);
+
+            // Assert
+            Assert.Single(((IState<IEnumerable<Registration>>)sut).State, r => r.Id != Guid.Empty
+                                                                                    && r.Name == name
+                                                                                    && r.Uri == url
+                                                                                    && r.CanonicalTypes == types);
+        }
     }
 }
