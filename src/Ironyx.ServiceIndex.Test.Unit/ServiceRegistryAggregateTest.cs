@@ -1,6 +1,7 @@
 ﻿using Bogus;
 using Ironyx.ServiceIndex.Domain;
 using Ironyx.ServiceIndex.Domain.Models;
+using Ironyx.ServiceIndex.Test.Unit.Attributes;
 
 namespace Ironyx.ServiceIndex.Test.Unit
 {
@@ -57,6 +58,34 @@ namespace Ironyx.ServiceIndex.Test.Unit
             // Act
             // Assert
             Assert.Throws<InvalidOperationException>(() => sut.Register(new Faker().Random.String2(10), uri));
+        }
+
+        [Theory(DisplayName = "[UNIT][SRA-004]: Name is empty")]
+        [ServiceRegistrationFeature]
+        [EmptyInlineData]
+        public void ServiceRegistryAggregate_Register_NameIsEmpty(string? name)
+        {
+            // Arrange
+            var sut = CreateSUT();
+
+            // Act
+            // Assert
+            if (name is null) Assert.Throws<ArgumentNullException>(() => sut.Register(name!, new Faker().Internet.Url()));
+            else Assert.Throws<ArgumentException>(() => sut.Register(name, new Faker().Internet.Url()));
+        }
+
+        [Theory(DisplayName = "[UNIT][SRA-005]: Uri is empty")]
+        [ServiceRegistrationFeature]
+        [EmptyInlineData]
+        public void ServiceRegistryAggregate_Register_UriIsEmpty(string? uri)
+        {
+            // Arrange
+            var sut = CreateSUT();
+
+            // Act
+            // Assert
+            if (uri is null) Assert.Throws<ArgumentNullException>(() => sut.Register(new Faker().Random.String2(10), uri!));
+            else Assert.Throws<ArgumentException>(() => sut.Register(new Faker().Random.String2(10), uri));
         }
     }
 }

@@ -20,6 +20,9 @@ namespace Ironyx.ServiceIndex.Domain
 
         public void Register(string name, string uri)
         {
+            ArgumentException.ThrowIfNullOrWhiteSpace(name);
+            ArgumentException.ThrowIfNullOrWhiteSpace(uri);
+
             if (_registration.Any(r => r.Name == name && r.Uri != uri)) throw Exceptions.ConflictName(name);
             if (_registration.Any(r => r.Name != name && r.Uri == uri)) throw Exceptions.ConflictUrl(name);
 
