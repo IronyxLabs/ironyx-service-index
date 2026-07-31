@@ -26,7 +26,13 @@ namespace Ironyx.ServiceIndex.Infrastructure.Repositories
                                                     .ToListAsync(cancellationToken);
 
             _logger.LogLoadedServiceRegistrations(registrations.Count);
-            return new ServiceRegistryAggregate(registrations.ConvertAll(r => new Registration { Id = r.Id, Name = r.Name, Uri = r.Uri }));
+            return new ServiceRegistryAggregate(registrations.ConvertAll(r => new Registration
+            {
+                Id = r.Id,
+                Name = r.Name,
+                Uri = r.Uri,
+                CanonicalTypes = r.CanonicalTypes.ConvertAll(ct => ct.ToValueObject())
+            }));
         }
 
         public async Task SaveAync(IState<IEnumerable<Registration>> aggregate, CancellationToken cancellationToken)
@@ -44,13 +50,15 @@ namespace Ironyx.ServiceIndex.Infrastructure.Repositories
                     {
                         Id = registration.Id,
                         Name = registration.Name,
-                        Uri = registration.Uri
+                        Uri = registration.Uri,
+                        CanonicalTypes = [.. registration.CanonicalTypes.ConvertAll()],
                     }, cancellationToken);
                 }
                 else
                 {
                     entity.Name = registration.Name;
                     entity.Uri = registration.Uri;
+                    entity.CanonicalTypes = [.. registration.CanonicalTypes.ConvertAll()];
                 }
             }
 
@@ -58,6 +66,27 @@ namespace Ironyx.ServiceIndex.Infrastructure.Repositories
             await transaction.CommitAsync(cancellationToken);
 
             _logger.LogSavedServiceRegistrations(aggregate.State.Count());
+        }
+    }
+
+    file static class ServiceRegistryRepositoryExtensions
+    {
+        public static IEnumerable<CanonicalTypeEntity> ConvertAll(this IEnumerable<CanonicalType> types)
+        {
+            foreach (var type in types)
+            {
+                yield return type.ToEntity();
+            }
+        }
+
+        public static CanonicalTypeEntity ToEntity(this CanonicalType type)
+        {
+            return new CanonicalTypeEntity { Type = type.Type, Version = type.Version };
+        }
+
+        public static CanonicalType ToValueObject(this CanonicalTypeEntity type)
+        {
+            return new CanonicalType { Type = type.Type, Version = type.Version };
         }
     }
 }

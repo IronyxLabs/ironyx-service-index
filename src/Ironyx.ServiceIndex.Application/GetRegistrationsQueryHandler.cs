@@ -24,7 +24,12 @@ namespace Ironyx.ServiceIndex.Application
             var registrations = await _context.Registrations.ToListAsync(cancellationToken);
 
             _logger.LogQueryedRegistrations(registrations.Count);
-            return registrations.ConvertAll(r => new GetRegistrationsQuery.Result { Name = r.Name, Uri = r.Uri });
+            return registrations.ConvertAll(r => new GetRegistrationsQuery.Result
+            {
+                Name = r.Name,
+                Uri = r.Uri,
+                Types = r.CanonicalTypes.ConvertAll(ct => new GetRegistrationsQuery.Result.CanonicalType { Type = ct.Type, Version = ct.Version })
+            });
         }
     }
 }

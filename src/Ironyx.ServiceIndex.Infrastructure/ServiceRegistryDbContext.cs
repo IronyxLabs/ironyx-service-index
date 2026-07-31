@@ -38,6 +38,8 @@ namespace Ironyx.ServiceIndex.Infrastructure
             builder.Property(b => b.Uri)
                 .HasColumnName("uri")
                 .IsRequired();
+
+            builder.OwnsMany(e => e.CanonicalTypes, builder => builder.ToJson("canonical_types"));
         }
     }
 }
