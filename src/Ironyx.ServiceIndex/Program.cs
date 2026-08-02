@@ -13,6 +13,8 @@ builder.Services.AddSerilog((_, configuration) => configuration.ReadFrom.Configu
 builder.Services.AddDbContext<ServiceRegistryDbContext>(contextBuilder => contextBuilder.UseNpgsql(builder.Configuration.GetConnectionString("ServiceIndex")));
 
 builder.UseKernel()
+    .AddGrpc(5900)
+
     .AddCommand<RegisterCommand, RegisterCommandHandler>()
 
     .AddQuery<GetRegistrationsQuery, IEnumerable<GetRegistrationsQuery.Result>, GetRegistrationsQueryHandler>()

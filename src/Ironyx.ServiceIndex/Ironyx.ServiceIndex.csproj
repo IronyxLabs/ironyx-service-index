@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-	  <PackageReference Include="Ironyx.Kernel" Version="1.0.1" />
+	  <PackageReference Include="Ironyx.Kernel" Version="1.0.2" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.10" />
 	  <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.3" />
 	  <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
