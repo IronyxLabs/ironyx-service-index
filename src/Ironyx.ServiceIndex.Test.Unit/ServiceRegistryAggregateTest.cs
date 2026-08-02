@@ -165,5 +165,20 @@ namespace Ironyx.ServiceIndex.Test.Unit
                                                                                     && r.Uri == url
                                                                                     && r.CanonicalTypes == types);
         }
+
+        [Fact(DisplayName = "[UNIT][SRA-009]: Registrate type and version has already been registered")]
+        [ServiceRegistrationFeature]
+        public void ServiceRegistryAggregate_Register_RegistrateTypeAndVersionHasAlreadyBeenRegistered()
+        {
+            // Arrange
+            var sut = CreateSUT();
+            var types = new CanonicalTypeFaker().GenerateBetween(1, 5);
+
+            sut.Register(new Faker().Random.String2(10), new Faker().Internet.Url(), types);
+
+            // Act
+            // Assert
+            Assert.Throws<InvalidOperationException>(() => sut.Register(new Faker().Random.String2(10), new Faker().Internet.Url(), types));
+        }
     }
 }
