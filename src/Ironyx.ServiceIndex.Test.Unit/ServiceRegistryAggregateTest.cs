@@ -142,5 +142,28 @@ namespace Ironyx.ServiceIndex.Test.Unit
                                                                                     && r.Uri == url
                                                                                     && r.CanonicalTypes == types);
         }
+
+        [Fact(DisplayName = "[UNIT][SRA-008]: Extend registration with new version")]
+        [ServiceRegistrationFeature]
+        public void ServiceRegistryAggregate_Register_ExtedRegistrationWithNewVersion()
+        {
+            // Arrange
+            var sut = CreateSUT();
+            var name = new Faker().Random.String2(10);
+            var url = new Faker().Internet.Url();
+            var originalTypes = new CanonicalTypeFaker().GenerateBetween(1, 5);
+            var types = originalTypes.Concat(new CanonicalTypeFaker().GenerateBetween(1, 5));
+
+            sut.Register(name, url, originalTypes);
+
+            // Act
+            sut.Register(name, url, types);
+
+            // Assert
+            Assert.Single(((IState<IEnumerable<Registration>>)sut).State, r => r.Id != Guid.Empty
+                                                                                    && r.Name == name
+                                                                                    && r.Uri == url
+                                                                                    && r.CanonicalTypes == types);
+        }
     }
 }
