@@ -1,8 +1,8 @@
 ﻿using Bogus;
 using Ironyx.ServiceIndex.Domain;
 using Ironyx.ServiceIndex.Domain.Models;
-using Ironyx.ServiceIndex.Test.Unit.Attributes;
 using Ironyx.ServiceIndex.Test.Unit.Fakers;
+using Ironyx.Testing;
 
 namespace Ironyx.ServiceIndex.Test.Unit
 {
