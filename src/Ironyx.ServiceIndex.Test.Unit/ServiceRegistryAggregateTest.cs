@@ -1,4 +1,5 @@
 ﻿using Bogus;
+using Ironyx.Kernel;
 using Ironyx.ServiceIndex.Domain;
 using Ironyx.ServiceIndex.Domain.Models;
 using Ironyx.ServiceIndex.Test.Unit.Fakers;
@@ -45,7 +46,7 @@ namespace Ironyx.ServiceIndex.Test.Unit
 
             // Act
             // Assert
-            Assert.Throws<InvalidOperationException>(() => sut.Register(name, new Faker().Internet.Url(), new CanonicalTypeFaker().GenerateBetween(1, 5)));
+            Assert.Throws<BusinessRuleException>(() => sut.Register(name, new Faker().Internet.Url(), new CanonicalTypeFaker().GenerateBetween(1, 5)));
         }
 
         [Fact(DisplayName = "[UNIT][SRA-003]: Register different service with same url")]
@@ -60,7 +61,7 @@ namespace Ironyx.ServiceIndex.Test.Unit
 
             // Act
             // Assert
-            Assert.Throws<InvalidOperationException>(() => sut.Register(new Faker().Random.String2(10), uri, new CanonicalTypeFaker().GenerateBetween(1, 5)));
+            Assert.Throws<BusinessRuleException>(() => sut.Register(new Faker().Random.String2(10), uri, new CanonicalTypeFaker().GenerateBetween(1, 5)));
         }
 
         [Theory(DisplayName = "[UNIT][SRA-004]: Name is empty")]
@@ -178,7 +179,56 @@ namespace Ironyx.ServiceIndex.Test.Unit
 
             // Act
             // Assert
-            Assert.Throws<InvalidOperationException>(() => sut.Register(new Faker().Random.String2(10), new Faker().Internet.Url(), types));
+            Assert.Throws<BusinessRuleException>(() => sut.Register(new Faker().Random.String2(10), new Faker().Internet.Url(), types));
+        }
+
+        [Fact(DisplayName = "[UNIT][SRA-010]: Unregister service")]
+        [ServiceRegistrationFeature]
+        public void ServiceRegistryAggregate_Unregister_UnregisterService()
+        {
+            // Arrange
+            var sut = CreateSUT();
+            Faker faker = new();
+            var name = new Faker().Random.String2(10);
+
+            sut.Register(name, faker.Internet.Url(), new CanonicalTypeFaker().Generate(1));
+
+            // Act
+            sut.Unregister(name);
+
+            // Assert
+            Assert.DoesNotContain(((IState<IEnumerable<Registration>>)sut).State, r => r.Name == name);
+        }
+
+        [Fact(DisplayName = "[UNIT][SRA-011]: Unregister not registered service")]
+        [ServiceRegistrationFeature]
+        public void ServiceRegistryAggregate_Unregister_UnregisterNotRegisteredService()
+        {
+            // Arrange
+            var sut = CreateSUT();
+            var name = new Faker().Random.String2(10);
+
+            // Act
+            sut.Unregister(name);
+
+            // Assert
+            Assert.DoesNotContain(((IState<IEnumerable<Registration>>)sut).State, r => r.Name == name);
+        }
+
+        [Theory(DisplayName = "[UNIT][SRA-012]: Unregister service without name")]
+        [ServiceRegistrationFeature]
+        [EmptyInlineData]
+        public void ServiceRegistryAggregate_Unregister_UnregisterServiceWithoutName(string? name)
+        {
+            // Arrange
+            var sut = CreateSUT();
+
+            // Act
+            // Assert
+#pragma warning disable CS8604 // Possible null reference argument.
+            if (name is null) Assert.Throws<ArgumentNullException>(() => sut.Unregister(name));
+            else Assert.Throws<ArgumentException>(() => sut.Unregister(name));
+#pragma warning restore CS8604 // Possible null reference argument.
         }
     }
 }

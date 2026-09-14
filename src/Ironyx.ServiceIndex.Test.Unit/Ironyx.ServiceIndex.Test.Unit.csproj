@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Ironyx.ServiceIndex.Api\Ironyx.ServiceIndex.Api.csproj" />
     <ProjectReference Include="..\Ironyx.ServiceIndex.Domain\Ironyx.ServiceIndex.Domain.csproj" />
   </ItemGroup>
 

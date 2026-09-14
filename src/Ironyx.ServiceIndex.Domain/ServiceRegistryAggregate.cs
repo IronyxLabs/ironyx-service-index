@@ -38,6 +38,15 @@ namespace Ironyx.ServiceIndex.Domain
             if (registration is null) _registration.Add(new Registration { Id = Guid.NewGuid(), Name = name, Uri = uri, CanonicalTypes = types });
             else registration.CanonicalTypes = types;
         }
+
+        public void Unregister(string name)
+        {
+            ArgumentException.ThrowIfNullOrWhiteSpace(name);
+
+            var registration = _registration.SingleOrDefault(r => r.Name == name);
+
+            if (registration is not null) _registration.Remove(registration);
+        }
     }
 
     file static class ServiceRegistryAggregateExtensions

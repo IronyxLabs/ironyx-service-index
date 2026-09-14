@@ -1,5 +1,5 @@
-
 using Ironyx.ServiceIndex;
+using Ironyx.ServiceIndex.Api;
 using Ironyx.ServiceIndex.Application;
 using Ironyx.ServiceIndex.Infrastructure;
 using Ironyx.ServiceIndex.Infrastructure.Repositories;
@@ -15,7 +15,8 @@ builder.Services.AddDbContext<ServiceRegistryDbContext>(contextBuilder => contex
 builder.UseKernel()
     .AddGrpc(5900)
 
-    .AddCommand<RegisterCommand, RegisterCommandHandler>()
+    .AddCommand<RegisterCommand, RegisterCommandHandler>(builder => builder.AddValidator<RegisterCommandValidator>())
+    .AddCommand<UnregisterCommand, UnregisterCommandHandler>(builder => builder.AddValidator<UnregisterCommandValidator>())
 
     .AddQuery<GetRegistrationsQuery, IEnumerable<GetRegistrationsQuery.Result>, GetRegistrationsQueryHandler>()
 
