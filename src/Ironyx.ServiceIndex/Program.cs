@@ -19,6 +19,7 @@ builder.UseKernel()
     .AddCommand<UnregisterCommand, UnregisterCommandHandler>(builder => builder.AddValidator<UnregisterCommandValidator>())
 
     .AddQuery<GetRegistrationsQuery, IEnumerable<GetRegistrationsQuery.Result>, GetRegistrationsQueryHandler>()
+    .AddQuery<GetConfigurationQuery, GetConfigurationQuery.Result, GetConfigurationQueryHandler>(builder => builder.AddValidator<GetConfigurationQueryValidator>())
 
     .AddCommandSender(new Uri("http://localhost:5100/"));
 

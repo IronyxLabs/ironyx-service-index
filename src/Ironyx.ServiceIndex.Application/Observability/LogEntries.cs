@@ -27,4 +27,12 @@ namespace Ironyx.ServiceIndex.Application.Observability
         [LoggerMessage(LogLevel.Information, message: "{Service} service has been unregistered")]
         public partial void LogUnregistered(string service);
     }
+
+    public partial class GetConfigruationQueryHandlerLogEntries(ILogger<GetConfigurationQueryHandler> logger)
+    {
+        [LoggerMessage(LogLevel.Debug, message: "Resolving service configuration for {Type}.{Version}")]
+        public partial void LogResolvingConfiguration(string type, string version);
+        [LoggerMessage(LogLevel.Debug, message: "Service configuration for {Type}.{Version} has been resolved")]
+        public partial void LogResolvedConfiguration(string type, string version);
+    }
 }
