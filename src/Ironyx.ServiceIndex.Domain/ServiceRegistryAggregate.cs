@@ -25,12 +25,12 @@ namespace Ironyx.ServiceIndex.Domain
 
             types.Validate();
 
-            if (_registration.Any(r => r.Name == name && r.Uri != uri)) throw Exceptions.ConflictName(name);
-            if (_registration.Any(r => r.Name != name && r.Uri == uri)) throw Exceptions.ConflictUrl(name);
+            if (_registration.Any(r => r.Name == name && r.Uri != uri)) throw Exceptions.ServiceRegistration.ConflictName(name);
+            if (_registration.Any(r => r.Name != name && r.Uri == uri)) throw Exceptions.ServiceRegistration.ConflictUrl(name);
             if (types.Any(t => _registration.Any(r => r.Name != name && r.CanonicalTypes.Any(ct => ct == t))))
             {
                 var type = types.First(t => _registration.Any(r => r.Name != name && r.CanonicalTypes.Any(ct => ct == t)));
-                throw Exceptions.ConflictType(type.Type, type.Version);
+                throw Exceptions.ServiceRegistration.ConflictType(type.Type, type.Version);
             }
 
             var registration = _registration.IsRegistered(name, uri);

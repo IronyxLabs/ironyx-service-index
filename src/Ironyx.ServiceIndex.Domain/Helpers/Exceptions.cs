@@ -4,7 +4,7 @@ namespace Ironyx.ServiceIndex.Domain.Helpers
 {
     public static class Exceptions
     {
-        public static class ServiceRegistrations
+        public static class ServiceRegistration
         {
             private const string SUBJECT = "Service Registration";
             private const string RESOURCE_TYPE = "Service Registration";
