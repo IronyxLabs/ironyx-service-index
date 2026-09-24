@@ -3,7 +3,7 @@ using Ironyx.ServiceIndex.Domain.Models;
 
 namespace Ironyx.ServiceIndex.Domain
 {
-    public interface IState<T>
+    public interface IState<out T>
     {
         public T State { get; }
     }
