@@ -8,4 +8,11 @@ namespace Ironyx.ServiceIndex.Test.Unit
         {
         }
     }
+
+    public class GetConfigurationFeatureAttribute : FeatureAttribute
+    {
+        public GetConfigurationFeatureAttribute() : base("GCF", "Get Configuration")
+        {
+        }
+    }
 }

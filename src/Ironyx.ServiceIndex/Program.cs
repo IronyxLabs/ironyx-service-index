@@ -19,8 +19,7 @@ builder.UseKernel()
     .AddCommand<UnregisterCommand, UnregisterCommandHandler>(builder => builder.AddValidator<UnregisterCommandValidator>())
 
     .AddQuery<GetRegistrationsQuery, IEnumerable<GetRegistrationsQuery.Result>, GetRegistrationsQueryHandler>()
-
-    .AddCommandSender(new Uri("http://localhost:5100/"));
+    .AddQuery<GetConfigurationQuery, GetConfigurationQuery.Result, GetConfigurationQueryHandler>(builder => builder.AddValidator<GetConfigurationQueryValidator>());
 
 builder.Services.AddTransient<IServiceRegistryRepository, ServiceRegistryRepository>();
 
