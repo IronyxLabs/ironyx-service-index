@@ -13,7 +13,7 @@ builder.Services.AddSerilog((_, configuration) => configuration.ReadFrom.Configu
 builder.Services.AddDbContext<ServiceRegistryDbContext>(contextBuilder => contextBuilder.UseNpgsql(builder.Configuration.GetConnectionString("ServiceIndex")));
 
 builder.UseKernel()
-    .AddGrpc(5900)
+    .AddGrpc(builder => builder.AddRequestReceiver(5900).AddRequestSender(new Uri("http://localhost:5900/")))
 
     .AddCommand<RegisterCommand, RegisterCommandHandler>(builder => builder.AddValidator<RegisterCommandValidator>())
     .AddCommand<UnregisterCommand, UnregisterCommandHandler>(builder => builder.AddValidator<UnregisterCommandValidator>())
